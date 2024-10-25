@@ -8,7 +8,7 @@ import authRoutes  from './routes/authRoutes.js';
 const app = express()
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3001',
     credentials: true
 }));
 app.use (morgan('dev'));
