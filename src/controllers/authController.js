@@ -1,91 +1,60 @@
-import User from "../models/userModel.js"
-import bcrypt from "bcryptjs"
-import { creatAccessToken} from "../libs/jwt.js";
+import User from '../models/userModel.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-export const register =  async (req, res) => {
-    const {firstName, lastName, phone, email, idCode, password} = req.body;
+export const registerUser = async (req, res) => {
+    const { fullName, email, universityID, contactNumber, password } = req.body;
+
+    // Validar campos obligatorios
+    if (!fullName || !email || !universityID || !contactNumber || !password) {
+        return res.status(400).json({ message: 'Todos los campos son requeridos' });
+    }
 
     try {
+        // Verificar si el usuario ya existe
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ message: 'El correo ya está en uso' });
+        }
 
-        const userFound = await User.findOne({email});
-        
-        if (userFound) 
-            return res.status(400).json(["the email is already in use"]);
-        
+        // Encriptar contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        const passwordHash = await bcrypt.hash(password, 10)
-
+        // Crear nuevo usuario
         const newUser = new User({
-            firstName,
-            lastName,
+            fullName,
             email,
-            password: passwordHash,
-            phone,
-            idCode
-        })
-    
-        const userSaved = await newUser.save();
-        const token = await creatAccessToken({id: userSaved._id});
+            universityID,
+            contactNumber,
+            password: hashedPassword
+        });
 
-        res.cookie("token", token);
-        res.json({id: userSaved._id,
-            firstName: userSaved.firstName,
-            lastName: userSaved.lastName,
-            email: userSaved.email,
-            phone: userSaved.phone,
-            idCode: userSaved.idCode,
-        })
+        await newUser.save();
+        res.status(201).json({ message: 'Usuario creado con éxito' });
     } catch (error) {
-        res.status(500).json({message:  error.message});
+        console.error('Error en registro de usuario:', error);
+        res.status(500).json({ message: 'Error al crear el usuario' });
     }
-
 };
 
-export const login =  async (req, res) => {
-    const {email, password} = req.body;
+export const loginUser = async (req, res) => {
+    const { email, password } = req.body;
 
     try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Usuario no encontrado' });
+        }
 
-        const userFound = await User.findOne({email});
-        if (!userFound) return res.status(400).json({message: "User not found"});
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Contraseña incorrecta' });
+        }
 
-        const isMatch = await bcrypt.compare(password, userFound.password);
-        if (!isMatch) return res.status(400).json({message: "Invalid password"});
-
-        const token = await creatAccessToken({id: userFound._id});
-        res.cookie("token", token);
-        res.json({id: userFound._id,
-            firstName: userFound.firstName,
-            lastName: userFound.lastName,
-            email: userFound.email,
-            phone: userFound.phone,
-            idCode: userFound.idCode,
-        })
-
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
     } catch (error) {
-        res.status(500).json({message:  error.message})
+        console.error('Error en inicio de sesión:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
     }
-
 };
-
-export const logout = async (req, res) =>{
-    res.cookie("token", "", {
-        expires: new Date(0)
-    });
-    return res.sendStatus(200);
-};
-export const profile = async (req, res) => {
-    const userFound = await User.findById(req.user.id)
-
-    if (!userFound) return res.status(400).json({message: "User not found"});
-
-    return res.json({
-        id: userFound._id,
-        firstName: userFound.firstName,
-        lastName: userFound.lastName,
-        email: userFound.email,
-        phone: userFound.phone,
-        idCode: userFound.idCode,
-    })
-    
-}

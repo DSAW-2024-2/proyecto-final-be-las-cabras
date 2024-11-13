@@ -23,7 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1",
     "morgan": "^1.10.0",
-    "vercel": "^37.12.1",
+    "vercel": "^32.3.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

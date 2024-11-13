@@ -1,1 +1,2 @@
-export const TOKEN_SECRET = 'some secret key'
+export const TOKEN_SECRET = process.env.JWT_SECRET || 'defaultSecretKey';
+export const DATABASE_URL = process.env.DATABASE_URL;
