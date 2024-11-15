@@ -5,7 +5,7 @@ require("dotenv").config();
 // Importar la librería Nodemailer
 const nodemailer = require("nodemailer");
 const { User } = require("../models/userModel");
-const { newUser } = require("../Middlewares/secure");
+const { newUser } = require("../middlewares/secure");
 
 const sendEmail = (mailOption) => {
   // Crear un objeto de transporte

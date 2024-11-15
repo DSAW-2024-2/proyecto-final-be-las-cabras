@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 const { User } = require("../models/userModel.js");
-const { decode } = require("../Middlewares/secure.js");
+const { decode } = require("../middlewares/secure.js");
 
 router.post("/recommend", decode, async (req, res) => {
   try {

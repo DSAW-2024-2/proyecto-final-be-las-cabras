@@ -4,7 +4,7 @@ const router = Router();
 
 const { Trip, Passenger } = require("../models/tripModel.js");
 
-const { decode } = require("../Middlewares/secure.js");
+const { decode } = require("../middlewares/secure.js");
 
 router.post("/:id", decode, async (req, res) => {
   const idTrip = req.params.id;

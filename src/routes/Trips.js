@@ -5,7 +5,7 @@ const { Trip } = require("../models/tripModel.js");
 const { User } = require("../models/userModel.js");
 const { Car } = require("../models/carModel.js");
 
-const { decode } = require("../Middlewares/secure.js");
+const { decode } = require("../middlewares/secure.js");
 
 router.delete("/", decode, async (req, res) => {
   try {

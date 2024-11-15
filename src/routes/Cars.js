@@ -5,7 +5,7 @@ const { Car } = require("../models/carModel.js");
 const { User } = require("../models/userModel.js");
 const { Trip } = require("../models/tripModel.js");
 
-const { decode } = require("../Middlewares/secure.js");
+const { decode } = require("../middlewares/secure.js");
 
 router.post("/", decode, async (req, res) => {
   try {

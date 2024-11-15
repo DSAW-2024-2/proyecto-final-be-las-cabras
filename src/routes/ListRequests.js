@@ -3,7 +3,7 @@ const router = Router();
 
 const { Trip } = require("../models/tripModel.js");
 
-const { decode } = require("../Middlewares/secure.js");
+const { decode } = require("../middlewares/secure.js");
 
 router.get("/", async (req, res) => {
   try {

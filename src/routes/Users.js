@@ -3,8 +3,8 @@ const router = Router();
 
 const { User } = require("../models/userModel.js");
 const { Trip } = require("../models/tripModel.js");
-const { hashData, verifyPassword } = require("../Middlewares/hashing.js");
-const { decode, codify } = require("../Middlewares/secure.js");
+const { hashData, verifyPassword } = require("../middlewares/hashing.js");
+const { decode, codify } = require("../middlewares/secure.js");
 const { Car } = require("../models/carModel.js");
 
 // Función para verificar si el usuario ya existe

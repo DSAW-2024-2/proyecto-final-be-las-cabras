@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const secretKey = "MaitoIsabelita1234";
+const secretKey = "juan1234455";
 
 const codify = async function (user) {
   try {
