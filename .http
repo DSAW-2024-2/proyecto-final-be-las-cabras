@@ -1,0 +1,14 @@
+POST http://localhost:3000/user
+Content-Type: application/json
+
+   {
+  "phone": "555441234567",
+  "idUniversidad": "124444345",
+  "userName": "juanperez44",
+  "lastName": "Pére44z",
+  "firstName": "Juan4",
+  "email": "jua44n@example.com",
+  "password": "miC4ontraseñaSegura"
+}
+
+
