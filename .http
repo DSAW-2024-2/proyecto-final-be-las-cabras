@@ -2,13 +2,13 @@ POST http://localhost:3000/user
 Content-Type: application/json
 
    {
-  "phone": "5551234567",
-  "idUniversidad": "12345",
-  "userName": "juanperez",
-  "lastName": "Pérez",
-  "firstName": "Juan",
-  "email": "juan@example.com",
-  "password": "miContraseñaSegura"
+  "phone": "555441234567",
+  "idUniversidad": "124444345",
+  "userName": "juanperez44",
+  "lastName": "Pére44z",
+  "firstName": "Juan4",
+  "email": "jua44n@example.com",
+  "password": "miC4ontraseñaSegura"
 }
 
 
